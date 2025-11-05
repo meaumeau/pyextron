@@ -151,8 +151,52 @@ class HDMISwitcher:
     def get_device(self) -> ExtronDevice:
         return self._device
 
+
+    
+
     async def view_input(self) -> int:
         return int(await self._device.run_command("!"))
 
     async def select_input(self, input: int):
         await self._device.run_command(f"{str(input)}!")
+
+
+class DMP64:
+    def __init__(self, device: ExtronDevice) -> None:
+        self._device = device
+
+    def get_device(self) -> ExtronDevice:
+        return self._device
+
+    async def view_input(self) -> int:
+        return int(await self._device.run_command("$"))
+
+    async def select_input(self, input: int):
+        await self._device.run_command(f"{str(input)}$")
+
+    async def mute(self):
+        await self._device.run_command("1Z")
+
+    async def unmute(self):
+        await self._device.run_command("0Z")
+
+    async def is_muted(self) -> bool:
+        is_muted = await self._device.run_command("Z")
+        return is_muted == "1"
+
+    async def get_volume_level(self):
+        volume = await self._device.run_command("V")
+        return int(volume)
+
+    async def set_volume_level(self, level: int):
+        await self._device.run_command(f"{level}V")
+
+    async def increment_volume(self):
+        await self._device.run_command("+V")
+
+    async def decrement_volume(self):
+        await self._device.run_command("-V")
+
+    async def get_temperature(self) -> int:
+        temperature = await self._device.run_command("\x1b" + "20STAT")
+        return int(temperature)
