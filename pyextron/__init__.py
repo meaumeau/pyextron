@@ -13,7 +13,7 @@ error_regexp = re.compile("E[0-9]{2}")
 class DeviceType(Enum):
     SURROUND_SOUND_PROCESSOR = "surround_sound_processor"
     HDMI_SWITCHER = "hdmi_switcher"
-    DMP64 = "DMP64"
+    DMP64 = "dmp64"
     UNKNOWN = "unknown"
 
 
